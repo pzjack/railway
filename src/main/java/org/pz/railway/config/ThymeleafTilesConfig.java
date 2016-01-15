@@ -2,6 +2,7 @@ package org.pz.railway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.thymeleaf.extras.tiles2.dialect.TilesDialect;
 import org.thymeleaf.extras.tiles2.spring4.web.configurer.ThymeleafTilesConfigurer;
 import org.thymeleaf.extras.tiles2.spring4.web.view.ThymeleafTilesView;
@@ -25,13 +26,25 @@ public class ThymeleafTilesConfig {
 	 * @return
 	 */
 	@Bean
-	public ThymeleafViewResolver thymeleafViewResolver(SpringTemplateEngine templateEngine) {
+	public ThymeleafViewResolver thymeleafTilesViewResolver(SpringTemplateEngine templateEngine) {
 		final ThymeleafViewResolver resolver = new ThymeleafViewResolver();
 		resolver.setViewClass(ThymeleafTilesView.class);
 		resolver.setTemplateEngine(templateEngine);
 		resolver.setCharacterEncoding("UTF-8");
+		resolver.setOrder(Ordered.LOWEST_PRECEDENCE);
 		return resolver;
 	}
+	
+	@Bean
+    public ThymeleafViewResolver thymeleafViewResolver(SpringTemplateEngine templateEngine) {
+        ThymeleafViewResolver vr = new ThymeleafViewResolver();
+        vr.setTemplateEngine(templateEngine);
+        vr.setCharacterEncoding("UTF-8");
+        vr.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        // all message/* views will not be handled by this resolver as they are Tiles views
+        vr.setExcludedViewNames(new String[]{"message/*"});
+        return vr;
+    }
 
 	@Bean
 	public TilesDialect tilesDialect() {

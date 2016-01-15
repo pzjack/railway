@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body>
+    <!--/*  Multiple fragments may be defined in one file */-->
+    <div id="footer" th:fragment="footer">
+        &copy; 2016 railway
+    </div>
+    <div id="footer" th:fragment="footer-admin">
+        &copy; 2016 Admin railway
+    </div>
+</body>
+</html>
+

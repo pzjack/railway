@@ -1,8 +1,22 @@
 server:
-    port: 8080
+    port: 8088
     session-timeout: 300
 
 spring:
   thymeleaf:
     cache: false
     check-template-location: true
+  messages:
+    basename: i18n/messages
+    cache-seconds: -1
+    
+#multipart:
+#  max-file-size: 120M
+#  max-request-size: 120M
+
+security:
+  basic:
+    enabled: false
+  user:
+    name: admin
+    password: admin
