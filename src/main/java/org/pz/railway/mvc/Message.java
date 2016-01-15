@@ -16,6 +16,7 @@ public class Message {
         return "messages";
     }
 	
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "message", method = RequestMethod.GET)
     public String messages(Model model) {
 //        model.addAttribute("messages", messageRepository.findAll());
