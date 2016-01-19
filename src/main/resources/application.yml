@@ -7,8 +7,39 @@ spring:
     cache: false
     check-template-location: true
   messages:
-    basename: i18n/messages
+    basename: resources/i18n/messages
     cache-seconds: -1
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/railway?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8
+    username: railway
+    password: railway
+    max-active: 100
+    max-idle: 5
+    min-idle: 2
+    initial-size: 2
+    connection-init-sql: "SELECT 1"
+    connection-test-query: "SELECT 1"
+    validation-query: "SELECT 1"
+    testOnConnect: true
+    testOnBorrow: true
+    testOnReturn: true
+    testWhileIdle: true
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    openInView: false
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: true
+      hibernate.generate_statistics: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      javax.persistence.sharedCache.mode: ENABLE_SELECTIVE
     
 #multipart:
 #  max-file-size: 120M

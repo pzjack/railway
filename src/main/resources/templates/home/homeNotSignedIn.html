@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/css/bootstrap.min.css}"/>
     <link href="/css/core.css" rel="stylesheet" media="screen" th:href="@{/css/core.css}" />
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/js/jquery-1.9.1.min.js" th:src="@{/js/jquery-1.9.1.min.js}"></script>
     <script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
     <script>
         /* Fill in modal with content loaded with Ajax */
@@ -17,10 +17,9 @@
                 $.ajax({
                     url: "signup",
                     cache: false
-                })
-                        .done(function (html) {
-                            $("#myModalBody").append(html);
-                        });
+                }).done(function (html) {
+                    $("#myModalBody").append(html);
+                });
             })
         });
     </script>

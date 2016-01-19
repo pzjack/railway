@@ -3,36 +3,54 @@
 	xmlns:tiles="http://www.thymeleaf.org">
 
 <head>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/css/bootstrap.min.css}"/>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen"	th:href="@{/css/bootstrap.min.css}" />
+<script src="/js/jquery-1.9.1.min.js" th:src="@{/js/jquery-1.9.1.min.js}"></script>
+<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 </head>
 <body>
-
-<!-- Navbar -->
-<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">RailWay</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li th:classappend="${page == 'home' ? 'active' : ''}"><a href="#" th:href="@{/}">Home</a></li>
-                <li th:classappend="${page == 'messages' ? 'active' : ''}"><a href="#" th:href="@{/message}">Messages</a></li>
-                <li th:classappend="${page == 'tasks' ? 'active' : ''}"><a href="#" th:href="@{/task}">Tasks</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li th:if="${#httpServletRequest.remoteUser == null}"><a href="/signin" th:href="@{/signin}">Sign in</a></li>
-                <li th:if="${#httpServletRequest.remoteUser != null}"><a href="/logout" th:href="@{/logout}">Logout</a></li>
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
-</div>
+	<!-- Navbar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		th:fragment="header">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">RailWay</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li th:classappend="${page == 'home' ? 'active' : ''}"><a href="#" th:href="@{/}">Home</a></li>
+					<li class="dropdown" th:classappend="${page == 'messages' ? 'active' : ''}">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Messages<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" th:href="@{/message}">Messages</a></li>
+							<li><a href="#">EJB</a></li>
+							<li><a href="#">Jasper Report</a></li>
+							<li class="divider"></li>
+							<li><a href="#">分离的链接</a></li>
+							<li class="divider"></li>
+							<li><a href="#">另一个分离的链接</a></li>
+						</ul>
+					</li>
+					<li class="dropdown" th:classappend="${page == 'admin' ? 'active' : ''}">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">系统管理<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" th:href="@{/manager/orgs}">组织机构</a></li>
+							<li><a href="#" th:href="@{/manager/users}">系统用户</a></li>
+						</ul>
+					</li>
+					<li th:classappend="${page == 'tasks' ? 'active' : ''}"><a href="#" th:href="@{/task}">Tasks</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li th:if="${#httpServletRequest.remoteUser == null}"><a href="/signin" th:href="@{/signin}">Sign in</a></li>
+					<li th:if="${#httpServletRequest.remoteUser != null}"><a href="/logout" th:href="@{/logout}">Logout</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
 </body>
 </html>

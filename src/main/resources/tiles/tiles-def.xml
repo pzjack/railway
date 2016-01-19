@@ -18,5 +18,14 @@
     -->
     <definition name="title/*" template="message/{1} :: title"/>
     <definition name="content/*" template="message/{1} :: content"/>
+
+    <definition name="tileview/*" template="layout/layoutModalDialog">
+        <put-attribute name="title" value="atitle/{1}"/>
+        <put-attribute name="head" value="head/{1}"/>
+        <put-attribute name="content" value="acontent/{1}"/>
+    </definition>
+    <definition name="atitle/*" template="tileview/{1} :: title"/>
+    <definition name="head/*" template="tileview/{1} :: head/title/link"/>
+    <definition name="acontent/*" template="tileview/{1} :: content"/>
   
 </tiles-definitions>

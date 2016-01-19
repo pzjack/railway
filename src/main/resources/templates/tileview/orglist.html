@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Message :: List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="/css/core.css" rel="stylesheet" media="screen" th:href="@{/css/core.css}"/>
+    <script src="/js/jquery-1.9.1.min.js" th:src="@{/js/jquery-1.9.1.min.js}"></script>
+    <script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div tiles:fragment="content">
+	<nav class="navbar" role="navigation">
+		<button id="new" data-toggle="modal" data-target="#myModal">新增</button>
+		<button id="update">修改</button>
+		<button id="delete">删除</button>
+	</nav>
+    <table id="orgdatalist" class="display">
+        <thead>
+        <tr>
+            <th>上级组织名称</th>
+            <th>上级组织类型</th>
+            <th>组织名称</th>
+            <th>组织类型</th>
+            <th>创建日期</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${orgs.empty}">
+            <td colspan="5">No orgs</td>
+        </tr>
+        <tr th:each="org : ${orgs}">
+            <td th:text="${org.parentName}">集团公司</td>
+            <td th:text="${org.parentType}">集团</td>
+            <td th:text="${org.name}">测试公司</td>
+            <td th:text="${org.type}">公司</td>
+            <td th:text="${org.createtime}">2016-01-12 14:23</td>
+        </tr>
+        </tbody>
+    </table>
+    <script>
+    $(function() {
+    	$("#new").button({icons:{primary: "ui-icon-circle-plus"},text: true}).click(function(){
+            /* Fill in modal with content loaded with Ajax */
+    		$.ajax({
+                url: "/manager/org/new",
+                cache: false
+            }).done(function (html) {
+                $("#myModalBody").html(html);
+            });
+            $("#myModalLabel").text("组织机构")
+    	});
+    	$("#update").button({icons:{primary: "ui-icon-circle-triangle-n"},text: true});
+    	$("#delete").button({icons:{primary: "ui-icon-circle-minus"},text: true});
+    	 $('#orgdatalist').DataTable({
+    		 language: {
+    		       url: '/js/Chinese.json'
+    		    }
+    	 });
+      });
+    </script>
+</div>
+</body>
+</html>

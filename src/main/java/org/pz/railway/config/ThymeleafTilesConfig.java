@@ -42,7 +42,7 @@ public class ThymeleafTilesConfig {
         vr.setCharacterEncoding("UTF-8");
         vr.setOrder(Ordered.HIGHEST_PRECEDENCE);
         // all message/* views will not be handled by this resolver as they are Tiles views
-        vr.setExcludedViewNames(new String[]{"message/*"});
+        vr.setExcludedViewNames(new String[]{"message/*", "tileview/*"});
         return vr;
     }
 

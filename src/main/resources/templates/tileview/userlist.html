@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Message :: List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="/css/core.css" rel="stylesheet" media="screen" th:href="@{/css/core.css}"/>
+    <script src="/js/jquery-1.9.1.min.js" th:src="@{/js/jquery-1.9.1.min.js}"></script>
+    <script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div tiles:fragment="content">
+	<nav class="navbar" role="navigation">
+		<button id="new" data-toggle="modal" data-target="#myModal">新增</button>
+		<button id="update">修改</button>
+		<button id="delete">删除</button>
+	</nav>
+    <table id="userdatalist" class="display">
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>角色</th>
+            <th>部门</th>
+            <th>创建日期</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${users.empty}">
+            <td>No users</td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.name}">李二</td>
+            <td th:text="${user.phone}">13323123456</td>
+            <td th:text="${user.email}">test@123.com</td>
+            <td th:text="${user.role}">组长</td>
+            <td th:text="${user.orgName}">机修班</td>
+            <td th:text="${user.createtime}">2016-01-12 14:23</td>
+        </tr>
+        </tbody>
+    </table>
+    <script>
+    $(function() {
+    	$("#new").button({icons:{primary: "ui-icon-circle-plus"},text: true}).click(function(){
+            /* Fill in modal with content loaded with Ajax */
+    		$.ajax({
+                url: "/manager/user/new",
+                cache: false
+            }).done(function (html) {
+                $("#myModalBody").html(html);
+            });
+            $("#myModalLabel").text("用户信息")
+    	});
+    	$("#update").button({icons:{primary: "ui-icon-circle-triangle-n"},text: true});
+    	$("#delete").button({icons:{primary: "ui-icon-circle-minus"},text: true});
+    	 $('#userdatalist').DataTable({
+    		 language: {
+    		       url: '/js/Chinese.json'
+    		    }
+    	 });
+      });
+    </script>
+</div>
+</body>
+</html>
