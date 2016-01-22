@@ -53,3 +53,16 @@ CREATE  TABLE `railway`.`T_ACCOUNT` (
   PRIMARY KEY (`ID`) ,
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) )
 COMMENT = '账号信息';
+
+
+ALTER TABLE `railway`.`t_account` ADD COLUMN `name` VARCHAR(60) NULL  AFTER `ID` ;
+
+CREATE TABLE `T_TOKEN` (
+  `ID` BIGINT NOT NULL AUTO_INCREMENT,
+  `token` varchar(80) DEFAULT NULL,
+  `invalidtime` BIGINT DEFAULT NULL,
+  `account_id` BIGINT DEFAULT NULL,
+  `user_id` BIGINT DEFAULT NULL,
+  `createtime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) COMMENT = 'token信息';

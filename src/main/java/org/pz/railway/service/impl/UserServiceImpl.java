@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.pz.railway.contants.Contants;
+import org.pz.railway.contants.GeneratorUUID;
 import org.pz.railway.entity.Account;
 import org.pz.railway.entity.Org;
+import org.pz.railway.entity.Token;
 import org.pz.railway.entity.User;
 import org.pz.railway.form.UserForm;
 import org.pz.railway.form.UserList;
 import org.pz.railway.repository.AccountRepository;
+import org.pz.railway.repository.TokenRepository;
 import org.pz.railway.repository.UserRepository;
 import org.pz.railway.service.OrgService;
 import org.pz.railway.service.UserService;
@@ -32,6 +35,9 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private AccountRepository accountRepository;
+	@Autowired
+	private TokenRepository tokenRepository;
+	
 	@Autowired
 	private OrgService orgService;
 	public User save(User org){
@@ -74,6 +80,7 @@ public class UserServiceImpl implements UserService {
 		account.setPassword(form.getPassword());
 		account.setRole(form.getRole());
 		account.setCreatetime(date);
+		account.setName(form.getName());
 		
 		User user = new User();
 		account.setUser(user);
@@ -103,5 +110,18 @@ public class UserServiceImpl implements UserService {
 			}
 			return null;
 		}
+	}
+	
+	public void createToken(Account act) {
+		List<Token> list = tokenRepository.findByAccountId(act.getId());
+		if(list.size() > 0) {
+			tokenRepository.delete(list);
+		}
+		Token token = new Token();
+		token.setAccount(act);
+		token.setCreatetime(new Date());
+		token.setUser(act.getUser());
+		token.setToken(GeneratorUUID.getRadomUUID());
+		tokenRepository.save(token);
 	}
 }

@@ -14,4 +14,5 @@ public interface UserService {
 	User saveUser(UserForm form, Errors errors);
 	List<UserList> findUser();
 	Account findByAccount(String account);
+	void createToken(Account act);
 }

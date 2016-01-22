@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 public class Account extends ID {
 	private static final long serialVersionUID = 4162869365157041576L;
 	private String account;
+	private String name;
 	private String salt;
 	private String password;
 	private Integer state;
@@ -24,6 +25,12 @@ public class Account extends ID {
 	}
 	public void setAccount(String account) {
 		this.account = account;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getSalt() {
 		return salt;

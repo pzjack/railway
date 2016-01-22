@@ -31,7 +31,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if (act == null) {
 			throw new UsernameNotFoundException("Could not find user " + username);
 		}
-		return new CustomUserDetails(act.getAccount(), act.getPassword(), act.getRole(), act.getUser().getName());
+		userService.createToken(act);
+		return new CustomUserDetails(act.getAccount(), act.getPassword(), act.getRole(), act.getName());
 	}
 	
 	
@@ -39,10 +40,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		private static final long serialVersionUID = 8683102959103260527L;
 		private String username;
 		private String password;
-		@SuppressWarnings("unused")
 		private String role;
 		private Integer roleid;
-		@SuppressWarnings("unused")
 		private String name;
 		private CustomUserDetails(String username, String password, Integer roleId, String name) {
 			this.username = username;
@@ -66,6 +65,56 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 					return AuthorityUtils.createAuthorityList(Contants.ROLE_USER);
 				}
 			}
+		}
+		
+		@Override
+		public boolean equals(Object rhs) {
+			if (rhs instanceof CustomUserDetails) {
+				return username.equals(((CustomUserDetails) rhs).getUsername());
+			}
+			return false;
+		}
+
+		/**
+		 * Returns the hashcode of the {@code username}.
+		 */
+		@Override
+		public int hashCode() {
+			return username.hashCode();
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString()).append(": ");
+			sb.append("Username: ").append(this.username).append("; ");
+			sb.append("Password: [PROTECTED]; ");
+			sb.append("role: ").append(this.role).append("; ");
+			sb.append("name: ").append(this.name).append("; ");
+			sb.append("Enabled: ").append(this.isEnabled()).append("; ");
+			sb.append("AccountNonExpired: ").append(this.isAccountNonExpired()).append("; ");
+			sb.append("credentialsNonExpired: ").append(this.isCredentialsNonExpired())
+					.append("; ");
+			sb.append("AccountNonLocked: ").append(this.isAccountNonLocked()).append("; ");
+
+			if (!getAuthorities().isEmpty()) {
+				sb.append("Granted Authorities: ");
+
+				boolean first = true;
+				for (GrantedAuthority auth : getAuthorities()) {
+					if (!first) {
+						sb.append(",");
+					}
+					first = false;
+
+					sb.append(auth);
+				}
+			}
+			else {
+				sb.append("Not granted any authorities");
+			}
+
+			return sb.toString();
 		}
 
 		@Override
