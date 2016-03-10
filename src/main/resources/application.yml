@@ -3,6 +3,9 @@ server:
     session-timeout: 300
 
 spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
   thymeleaf:
     cache: false
     check-template-location: true
@@ -46,6 +49,7 @@ spring:
 #  max-request-size: 120M
 
 security:
+  enable-csrf: false
   basic:
     enabled: false
   user:

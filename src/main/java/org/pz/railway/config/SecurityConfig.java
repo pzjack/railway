@@ -18,14 +18,47 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// @formatter:off
-		http.authorizeRequests().antMatchers("/", "/signin", "/css/**", "/js/**", "/api/**", "/static/**", "/error").permitAll()
-			.anyRequest().fullyAuthenticated()
-			.and().formLogin().loginPage("/signin")
-			.and().logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+
+//		http.requiresChannel().antMatchers("signin").requiresSecure();
+//		http.requiresChannel().antMatchers("/**").requiresInsecure();
+		
+		/*http
+		.authorizeRequests()                                                                1
+			.antMatchers("/resources/**", "/signup", "/about").permitAll()                  2
+			.antMatchers("/admin/**").hasRole("ADMIN")                                      3
+			.antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")            4
+			.anyRequest().authenticated()                                                   5
 			.and()
-            .sessionManagement()
+		...
+		.formLogin();*/
+		// @formatter:off
+		http.authorizeRequests()
+			.antMatchers("/", "/signin", "/css/**", "/js/**", "/api/**", "/static/**", "/error")
+			.permitAll()
+			.anyRequest()	//.authenticated()
+			.fullyAuthenticated();
+		
+		
+		/**
+		 * 
+		 */
+		http.formLogin()
+			.loginPage("/signin");
+		
+		/**
+         * <logout invalidate-session="true" delete-cookies="JSESSIONID" />
+         */
+		http.logout()
+//			.logoutUrl("/logout")
+			.logoutSuccessUrl("/")
+			.invalidateHttpSession(true)
+			.deleteCookies("JSESSIONID")
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+		
+		/**
+         * <session-management session-fixation-protection="newSession"/>
+         */
+		http.sessionManagement()
             .maximumSessions(1)
             .expiredUrl("/")
             .maxSessionsPreventsLogin(true)
